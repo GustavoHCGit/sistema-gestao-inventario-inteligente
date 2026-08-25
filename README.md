@@ -1,78 +1,200 @@
-# 📦 Sistema de Gestão de Inventário Inteligente
+# Sistema de Gestão de Inventário Inteligente
 
-Este é um sistema robusto de gestão de inventário e vendas desenvolvido para pequenas e médias empresas. O projeto utiliza **Python** com a biblioteca **Streamlit** para a interface de utilizador e **SQLite** para o armazenamento persistente de dados.
 
-## 🔗 Demo ao Vivo
 
-Você pode testar a aplicação diretamente no seu navegador através do link abaixo:
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 
-👉 **[Clique aqui para acessar a Demo](https://sistema-gestao-inventario.streamlit.app/)**
+[![Streamlit](https://img.shields.io/badge/App-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
 
-## 🚀 Funcionalidades
+[![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 
-- **Dashboard Interativo**: Visualize métricas em tempo real, como faturamento total, número de produtos e vendas realizadas.
-- **Gestão de Estoque**: Adicione, visualize e controle a quantidade de produtos disponíveis.
-- **Categorização**: Organize os seus produtos por categorias para uma melhor gestão.
-- **Registro de Vendas**: Registe vendas de forma rápida, com verificação automática de stock.
-- **Visualização de Dados**: Gráficos dinâmicos (Pie e Bar charts) utilizando Plotly para análise de stock por categoria e desempenho de vendas por produto.
+[![Status](https://img.shields.io/badge/status-demo%20online-2ea44f)](https://sistema-gestao-inventario.streamlit.app/)
 
-## 📸 Demonstração Visual
 
-**Tela 1 - Dashboard com Métricas Principais:**
-![Dashboard com Métricas](dashboard_screenshot_1.webp)
 
-**Tela 2 - Gerenciamento de Produtos:**
-![Gerenciamento de Produtos](dashboard_screenshot_2.webp)
+Dashboard de gestão de inventário e vendas para pequenas e médias empresas. A aplicação usa Python, Streamlit, SQLite, Pandas e Plotly para acompanhar produtos, stock, vendas e indicadores num único painel.
 
-**Tela 3 - Registro de Vendas:**
-![Registro de Vendas](dashboard_screenshot_3.webp)
 
-## 🛠️ Tecnologias Utilizadas
 
-- [Python](https://www.python.org/)
-- [Streamlit](https://streamlit.io/)
-- [Pandas](https://pandas.pydata.org/)
-- [Plotly](https://plotly.com/)
-- [SQLite](https://www.sqlite.org/)
+## Demo ao vivo
 
-## 📋 Pré-requisitos
 
-Certifique-se de ter o Python instalado na sua máquina. Para instalar as dependências necessárias, execute:
+
+A aplicação está disponível no Streamlit Community Cloud:
+
+
+
+**[Abrir o Sistema de Gestão de Inventário](https://sistema-gestao-inventario.streamlit.app/)**
+
+
+
+## Demonstração visual
+
+
+
+### Dashboard e métricas
+
+
+
+![Dashboard com métricas](dashboard_screenshot_1.webp)
+
+
+
+### Gestão de produtos
+
+
+
+![Gestão de produtos](dashboard_screenshot_2.webp)
+
+
+
+### Registo de vendas
+
+
+
+![Registo de vendas](dashboard_screenshot_3.webp)
+
+
+
+## Funcionalidades
+
+
+
+- Dashboard com faturação, produtos, stock e vendas.
+- 
+- Cadastro e consulta de produtos por categoria.
+- 
+- Registo de vendas com verificação automática de stock.
+- 
+- Gráficos Plotly para análise de stock e desempenho de vendas.
+- 
+- Persistência local dos dados numa base SQLite.
+- 
+- Script de seed para criar tabelas e carregar dados de exemplo.
+- 
+
+
+## Tecnologias
+
+
+
+| Tecnologia | Utilização |
+
+| --- | --- |
+
+| Python | Lógica da aplicação |
+
+| Streamlit | Interface web interactiva |
+
+| SQLite | Persistência local |
+
+| Pandas | Tratamento e leitura dos dados |
+
+| Plotly | Gráficos e visualizações |
+
+
+
+## Como executar localmente
+
+
+
+### 1. Clonar e instalar
+
+
 
 ```bash
-pip install streamlit pandas plotly
-```
 
-## 🔧 Como Executar Localmente
-
-1. Clone o repositório:
-
-```bash
 git clone https://github.com/GustavoHCGit/sistema-gestao-inventario-inteligente.git
+
 cd sistema-gestao-inventario-inteligente
-```
 
-2. Instale as dependências:
+python -m venv venv
 
-```bash
+# Linux/macOS
+
+source venv/bin/activate
+
+# Windows PowerShell: .\venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
+
 ```
 
-3. Popule o banco de dados com dados de exemplo:
+
+
+### 2. Carregar dados de demonstração
+
+
+
+Antes de abrir o dashboard, execute o seed para criar as tabelas e carregar categorias, produtos e vendas de exemplo:
+
+
 
 ```bash
+
 python seed_data.py
+
 ```
 
-4. Execute a aplicação:
+
+
+O script pode ser executado novamente para reconstruir a base local de demonstração quando necessário.
+
+
+
+### 3. Iniciar a aplicação
+
+
 
 ```bash
+
 streamlit run main.py
+
 ```
 
-## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
----
-Desenvolvido por [Gustavo Henrique Constante Neto](https://github.com/GustavoHCGit)
+A aplicação será aberta no navegador em `http://localhost:8501`.
+
+
+
+## Estrutura do projecto
+
+
+
+```text
+
+.
+
+├── main.py
+
+├── database.py
+
+├── seed_data.py
+
+├── streamlit_init.py
+
+├── requirements.txt
+
+├── dashboard_screenshot_1.webp
+
+├── dashboard_screenshot_2.webp
+
+├── dashboard_screenshot_3.webp
+
+└── README.md
+
+```
+
+
+
+## Licença
+
+
+
+Este projecto está disponível para fins de estudo e portfólio.
+
+
+
+
+
