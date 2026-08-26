@@ -1,7 +1,7 @@
 import sqlite3
 
 def connect_db():
-    return sqlite3.connect('inventory_runtime.db')
+    return sqlite3.connect('inventory_cloud_v2.db')
 
 
 def create_tables():
