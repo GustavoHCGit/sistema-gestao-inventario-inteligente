@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 import database
 import plotly.express as px
+from pathlib import Path
+from seed_data import seed
+
+if not Path("inventory.db").exists():
+    seed()
 
 st.set_page_config(page_title="Gestor de Inventário Inteligente", layout="wide")
 
