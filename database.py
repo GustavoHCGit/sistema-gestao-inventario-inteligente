@@ -8,6 +8,15 @@ def create_tables():
     conn = connect_db()
     cursor = conn.cursor()
 
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='products'")
+    if cursor.fetchone():
+        columns = {row[1] for row in cursor.execute("PRAGMA table_info(products)")}
+        if "stock_quantity" not in columns:
+            cursor.execute("DROP TABLE IF EXISTS sales")
+            cursor.execute("DROP TABLE IF EXISTS products")
+            cursor.execute("DROP TABLE IF EXISTS categories")
+            conn.commit()
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS categories (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
