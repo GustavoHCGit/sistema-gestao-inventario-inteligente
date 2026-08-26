@@ -5,7 +5,7 @@ import plotly.express as px
 from pathlib import Path
 from seed_data import seed
 
-if not Path("inventory.db").exists():
+if not Path("inventory_cloud_v2.db").exists():
     seed()
 
 st.set_page_config(page_title="Gestor de Inventário Inteligente", layout="wide")
