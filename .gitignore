@@ -24,6 +24,9 @@ wheels/
 # SQLite
 *.db
 
+# Configurações locais
+.env
+
 # Streamlit
 .streamlit/
 
