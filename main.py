@@ -1,14 +1,15 @@
-import streamlit as st
 import pandas as pd
-import database
 import plotly.express as px
+import streamlit as st
+
+import database
 from seed_data import seed
 
 database.create_tables()
 if not database.get_categories():
     seed()
 
-st.set_page_config(page_title="Gestor de Inventário Inteligente", layout="wide")
+st.set_page_config(page_title="Gestor de Inventário", layout="wide")
 st.title("📦 Sistema de Gestão de Inventário e Vendas")
 st.markdown("""
 **Análise de Dados**.
@@ -37,7 +38,7 @@ if choice == "Dashboard":
         st.write("### Estoque por Categoria")
         if not df_products.empty:
             fig_stock = px.pie(df_products, values="Estoque", names="Categoria", hole=.3)
-            st.plotly_chart(fig_stock, use_container_width=True)
+            st.plotly_chart(fig_stock, width="stretch")
         else:
             st.info("Nenhum produto cadastrado.")
     with c2:
@@ -45,31 +46,30 @@ if choice == "Dashboard":
         if not df_sales.empty:
             df_sales_agg = df_sales.groupby("Produto")["Total"].sum().reset_index()
             fig_sales = px.bar(df_sales_agg, x="Produto", y="Total", color="Total")
-            st.plotly_chart(fig_sales, use_container_width=True)
+            st.plotly_chart(fig_sales, width="stretch")
         else:
             st.info("Nenhuma venda registrada ainda.")
 
 elif choice == "Produtos":
     st.subheader("📋 Gerenciamento de Estoque")
-    with st.expander("➕ Adicionar Novo Produto"):
-        with st.form("form_add_prod"):
-            name = st.text_input("Nome do Produto")
-            categories = database.get_categories()
-            cat_options = {cat[1]: cat[0] for cat in categories}
-            category_name = st.selectbox("Categoria", list(cat_options.keys()) if cat_options else ["Nenhuma"])
-            price = st.number_input("Preço Unitário (R$)", min_value=0.0, step=0.01)
-            stock = st.number_input("Quantidade em Estoque", min_value=0, step=1)
-            submit = st.form_submit_button("Salvar Produto")
-            if submit:
-                if category_name != "Nenhuma":
-                    database.add_product(name, cat_options[category_name], price, stock)
-                    st.success(f"Produto '{name}' adicionado!")
-                    st.rerun()
-                else:
-                    st.error("Crie uma categoria primeiro!")
+    with st.expander("➕ Adicionar Novo Produto"), st.form("form_add_prod"):
+        name = st.text_input("Nome do Produto")
+        categories = database.get_categories()
+        cat_options = {cat[1]: cat[0] for cat in categories}
+        category_name = st.selectbox("Categoria", list(cat_options.keys()) if cat_options else ["Nenhuma"])
+        price = st.number_input("Preço Unitário (R$)", min_value=0.0, step=0.01)
+        stock = st.number_input("Quantidade em Estoque", min_value=0, step=1)
+        submit = st.form_submit_button("Salvar Produto")
+        if submit:
+            if category_name != "Nenhuma":
+                database.add_product(name, cat_options[category_name], price, stock)
+                st.success(f"Produto '{name}' adicionado!")
+                st.rerun()
+            else:
+                st.error("Crie uma categoria primeiro!")
     products_data = database.get_products()
     df_products = pd.DataFrame(products_data, columns=["ID", "Produto", "Categoria", "Preço", "Estoque"])
-    st.dataframe(df_products, use_container_width=True)
+    st.dataframe(df_products, width="stretch")
 
 elif choice == "Vendas":
     st.subheader("🛒 Registro de Vendas")
@@ -86,7 +86,7 @@ elif choice == "Vendas":
                     st.success("Venda registrada com sucesso!")
                     st.rerun()
                 else:
-                    st.error("Estoque insuficiente para esta venda!")
+                    st.error("Quantidade inválida ou estoque insuficiente para esta venda!")
     else:
         st.warning("Cadastre produtos antes de realizar vendas.")
     st.write("### Histórico Recente")
@@ -100,8 +100,11 @@ elif choice == "Configurações":
     new_cat = st.text_input("Nova Categoria")
     if st.button("Adicionar Categoria"):
         if new_cat:
-            database.add_category(new_cat)
-            st.success(f"Categoria '{new_cat}' criada!")
+            result = database.add_category(new_cat)
+            if result.duplicate:
+                st.warning(f"A categoria '{new_cat}' já existe.")
+            else:
+                st.success(f"Categoria '{new_cat}' criada!")
             st.rerun()
         else:
             st.warning("Digite um nome para a categoria.")

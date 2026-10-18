@@ -1,8 +1,7 @@
-import os
-import sqlite3
+import database
 from seed_data import seed
 
-# Inicializar banco de dados se não existir
-if not os.path.exists('inventory.db'):
+database.create_tables()
+if not database.get_categories():
     seed()
     print("Banco de dados inicializado com dados de exemplo.")
